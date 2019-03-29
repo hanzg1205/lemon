@@ -2,7 +2,7 @@
  * @Author: mikey.hanzhigang 
  * @Date: 2019-03-21 15:39:34 
  * @Last Modified by: mikey.韩志刚
- * @Last Modified time: 2019-03-21 20:32:24
+ * @Last Modified time: 2019-03-29 14:59:06
  * @function [分类的业务逻辑]
  */
 const Mongo = require('mongodb-curd');
@@ -46,7 +46,9 @@ module.exports = {
     },
     classify: function(req, res, next) { // 查询分类
         let { type, common } = req.query;
-        let data = { type: type, common: { $in: ['y', common] } };
+        let data = type ? { type: type, common: { $in: ['y', common] } } : { common: { $in: ['y', common] } };
+        console.log(data);
+        // let data = { type: type, common: { $in: ['y', common] } };
         Mongo.find(dbName, 'classify', data, function(result) {
             if (!result) {
                 res.send({
